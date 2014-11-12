@@ -66,7 +66,7 @@
       "scripts/quiet-tty-warning.sh",
       "scripts/apt-update.sh",
       "scripts/update-trusty-kernel.sh",
-      "scripts/vbox-guest-additions.sh", 
+      "scripts/vbox-guest-additions.sh",
       "scripts/kernel-cleanup.sh",
       "scripts/admin-sudoers.sh",
       "scripts/increase-loop-devices.sh",
