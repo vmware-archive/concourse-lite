@@ -1,0 +1,57 @@
+---
+name: concourse
+
+releases:
+  - name: concourse
+    url: https://s3.amazonaws.com/concourse-releases/concourse-0.20.0.tgz
+    version: 0.20.0
+  - name: garden-linux
+    url: https://s3.amazonaws.com/garden-linux-release/releases/garden-linux-0.49.0.tgz
+    version: 0.49.0
+
+networks:
+  - name: concourse
+    type: dynamic
+
+jobs:
+  - name: concourse
+    instances: 1
+    networks: [{name: concourse}]
+    templates:
+      - {release: concourse, name: atc}
+      - {release: concourse, name: turbine}
+      - {release: concourse, name: postgresql}
+      - {release: garden-linux, name: garden}
+      - {release: concourse, name: consul-agent}
+    properties:
+      atc:
+        # turn off and provide auth for a real vagrant instance
+        development_mode: true
+
+        postgresql:
+          role: &atc-role
+            name: atc
+            password: dummy-password
+
+      postgresql:
+        databases: [{name: atc}]
+        roles:
+          - *atc-role
+
+      consul:
+        agent:
+          mode: server
+          services:
+            - name: atc
+            - name: turbine
+            - name: postgresql
+            - name: garden
+
+compilation:
+  network: concourse
+
+update:
+  canaries: 0
+  canary_watch_time: 1000-60000
+  update_watch_time: 1000-60000
+  max_in_flight: 10

@@ -81,7 +81,7 @@
   },{
     "type": "packer-bosh",
     "assets_dir": "packer-bosh/assets",
-    "manifest_path": "bosh_lite_manifest.yml",
+    "manifest_path": "concourse_manifest.yml",
     "ssh_password": "vagrant"
   },{
     "type": "shell",
@@ -90,7 +90,6 @@
     "scripts": [
       "scripts/add-vcap-to-vagrant.sh",
       "scripts/set-temp-dir.sh",
-      "scripts/install-cli-tools.sh",
       "scripts/clean-up.sh",
       "scripts/shrink-disk.sh"
     ]
@@ -100,6 +99,6 @@
     "type": "vagrant",
     "keep_input_artifact": true,
     "vagrantfile_template": "templates/vagrant-local.tpl",
-    "output": "bosh-lite-{{ .Provider }}-ubuntu-trusty-{{user `build_number`}}.box"
+    "output": "concourse-{{ .Provider }}-ubuntu-trusty-{{user `build_number`}}.box"
   }]
 }
