@@ -59,14 +59,6 @@
   }],
 
   "provisioners": [{
-    "type": "file",
-    "source": "concourse.tgz",
-    "destination": "/concourse.tgz"
-  },{
-    "type": "file",
-    "source": "garden-linux.tgz",
-    "destination": "/garden-linux.tgz"
-  },{
     "type": "shell",
     "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -S -E {{ .Path }}",
     "scripts": [
@@ -86,6 +78,14 @@
   },{
     "type": "shell",
     "inline": "echo 'vagrant' | sudo -S usermod -a -G admin vagrant"
+  },{
+    "type": "file",
+    "source": "concourse.tgz",
+    "destination": "/tmp/concourse.tgz"
+  },{
+    "type": "file",
+    "source": "garden-linux.tgz",
+    "destination": "/tmp/garden-linux.tgz"
   },{
     "type": "packer-bosh",
     "assets_dir": "packer-bosh/assets",
