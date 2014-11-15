@@ -1,6 +1,5 @@
 Vagrant.configure('2') do |config|
-  config.vm.box = 'concourse/concourse'
-  config.vm.box_version = '0.20.0'
+  config.vm.box = 'concourse/lite'
 
   config.vm.provider :virtualbox do |v, override|
     # To use a different IP address for the bosh-lite director, uncomment this line:
