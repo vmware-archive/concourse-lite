@@ -18,3 +18,5 @@ rsync -a -P -e ssh \
   ${lite_root}/ ${SSH_TARGET}:concourse-lite-buildbox/
 
 ssh -t ${SSH_TARGET} ./concourse-lite-buildbox/bin/buildbox-build ${PROVIDER} "$@"
+
+scp "${SSH_TARGET}:concourse-lite-buildbox/*.box" .

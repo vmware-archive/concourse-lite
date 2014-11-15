@@ -54,4 +54,8 @@ EOF
 export PACKER_CONFIG=${lite_dir}/.packerconfig
 
 cd ${lite_dir}
+
+# clear out old boxes so only one gets scp'd back
+rm -f *.box
+
 ./bin/build-${PROVIDER} "$@"
