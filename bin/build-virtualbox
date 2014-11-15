@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 CONCOURSE_RELEASE_VERSION=${1}
 GARDEN_LINUX_RELEASE_VERSION=${2}
 
@@ -17,7 +19,8 @@ templates_dir=$(cd ${build_dir}/templates && pwd)
 
 ${bin_dir}/generate-concourse-manifest ${CONCOURSE_RELEASE_VERSION} ${GARDEN_LINUX_RELEASE_VERSION}
 
-export PACKER_CONFIG=$(${bin_dir}/fetch-packer-bosh)
+# fetch assets; disregard provisioner binary
+${bin_dir}/fetch-packer-bosh
 
 rm -rf $(dirname $0)/../output-virtualbox-iso
 

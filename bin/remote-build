@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -e -x
+
+SSH_TARGET=${1}
+PROVIDER=${2}
+
+shift
+shift
+
+lite_root=$(cd $(dirname $0)/.. && pwd)
+
+rsync -a -P -e ssh \
+  --exclude '*.box' \
+  --exclude .git \
+  --exclude packer_cache \
+  --exclude packer-bosh \
+  ${lite_root}/ ${SSH_TARGET}:concourse-lite-buildbox/
+
+ssh -t ${SSH_TARGET} ./concourse-lite-buildbox/bin/buildbox-build ${PROVIDER} "$@"
