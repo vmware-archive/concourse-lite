@@ -1,6 +1,6 @@
 {
   "variables": {
-    "build_number": "0"
+    "version": "0"
   },
   "builders": [{
     "type": "virtualbox-iso",
@@ -99,6 +99,6 @@
     "type": "vagrant",
     "keep_input_artifact": true,
     "vagrantfile_template": "templates/vagrant-local.tpl",
-    "output": "concourse-{{ .Provider }}-ubuntu-trusty-{{user `build_number`}}.box"
+    "output": "concourse-{{ .Provider }}-ubuntu-trusty-{{user `version`}}.box"
   }]
 }

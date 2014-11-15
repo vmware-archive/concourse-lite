@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/bin/sh
+
+set -e
 
 CONCOURSE_RELEASE_VERSION=${1}
 GARDEN_LINUX_RELEASE_VERSION=${2}
@@ -11,15 +13,11 @@ function usage() {
 [ -n "$CONCOURSE_RELEASE_VERSION" ] || usage
 [ -n "$GARDEN_LINUX_RELEASE_VERSION" ] || usage
 
-bin_dir=$(dirname $0)
 build_dir=$(cd $(dirname $0)/.. && pwd)
 templates_dir=$(cd ${build_dir}/templates && pwd)
 
-${bin_dir}/generate-concourse-manifest ${CONCOURSE_RELEASE_VERSION} ${GARDEN_LINUX_RELEASE_VERSION}
-
-export PACKER_CONFIG=$(${bin_dir}/fetch-packer-bosh)
-
-rm -rf $(dirname $0)/../output-virtualbox-iso
-
-packer build -var "version=${CONCOURSE_RELEASE_VERSION}" \
-  ${templates_dir}/virtualbox.json
+sed \
+  -e "s/CONCOURSE_RELEASE_VERSION/${CONCOURSE_RELEASE_VERSION}/g" \
+  -e "s/GARDEN_LINUX_RELEASE_VERSION/${GARDEN_LINUX_RELEASE_VERSION}/g" \
+  ${templates_dir}/concourse_manifest.yml > \
+  ${build_dir}/concourse_manifest.yml
