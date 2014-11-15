@@ -59,8 +59,13 @@
   }],
 
   "provisioners": [{
-    "type": "shell",
-    "inline": "find / -name concourse-0.23.0.tgz"
+    "type": "file",
+    "source": "concourse.tgz",
+    "destination": "/tmp/concourse.tgz"
+  },{
+    "type": "file",
+    "source": "garden-linux.tgz",
+    "destination": "/tmp/garden-linux.tgz"
   },{
     "type": "shell",
     "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -S -E {{ .Path }}",
