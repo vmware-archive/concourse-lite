@@ -3,10 +3,10 @@ name: concourse
 
 releases:
   - name: concourse
-    url: file:///tmp/concourse.tgz
+    url: file:///concourse.tgz
     version: CONCOURSE_RELEASE_VERSION
   - name: garden-linux
-    url: file:///tmp/garden-linux.tgz
+    url: file:///garden-linux.tgz
     version: GARDEN_LINUX_RELEASE_VERSION
 
 networks:

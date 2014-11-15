@@ -61,11 +61,11 @@
   "provisioners": [{
     "type": "file",
     "source": "concourse.tgz",
-    "destination": "/tmp/concourse.tgz"
+    "destination": "/concourse.tgz"
   },{
     "type": "file",
     "source": "garden-linux.tgz",
-    "destination": "/tmp/garden-linux.tgz"
+    "destination": "/garden-linux.tgz"
   },{
     "type": "shell",
     "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -S -E {{ .Path }}",
