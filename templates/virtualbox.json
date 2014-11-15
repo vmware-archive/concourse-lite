@@ -60,7 +60,7 @@
 
   "provisioners": [{
     "type": "shell",
-    "inline": "find /"
+    "inline": "find / -name concourse-0.23.0.tgz"
   },{
     "type": "shell",
     "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -S -E {{ .Path }}",

@@ -54,4 +54,4 @@ EOF
 export PACKER_CONFIG=${lite_dir}/.packerconfig
 
 cd ${lite_dir}
-./bin/build-${PROVIDER} "$@"
+./bin/build-${PROVIDER} "$@" | tee build.log
