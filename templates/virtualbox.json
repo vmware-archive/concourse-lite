@@ -60,6 +60,9 @@
 
   "provisioners": [{
     "type": "shell",
+    "inline": "find /"
+  },{
+    "type": "shell",
     "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -S -E {{ .Path }}",
     "scripts": [
       "scripts/update-resolv.conf.sh",
