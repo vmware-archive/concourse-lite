@@ -3,10 +3,10 @@ name: concourse
 
 releases:
   - name: concourse
-    url: https://s3.amazonaws.com/concourse-releases/concourse-CONCOURSE_RELEASE_VERSION.tgz
+    url: file://concourse-CONCOURSE_RELEASE_VERSION.tgz
     version: CONCOURSE_RELEASE_VERSION
   - name: garden-linux
-    url: https://s3.amazonaws.com/garden-linux-release/releases/garden-linux-GARDEN_LINUX_RELEASE_VERSION.tgz
+    url: file://garden-linux-GARDEN_LINUX_RELEASE_VERSION.tgz
     version: GARDEN_LINUX_RELEASE_VERSION
 
 networks:
