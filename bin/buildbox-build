@@ -15,14 +15,6 @@ function install_virtualbox() {
     wget http://download.virtualbox.org/virtualbox/4.3.18/virtualbox-4.3_4.3.18-96516~Ubuntu~raring_amd64.deb -O virtualbox.deb
     sudo dpkg -i virtualbox.deb
     rm virtualbox.deb
-
-    wget http://download.virtualbox.org/virtualbox/4.3.18/VBoxGuestAdditions_4.3.18.iso -O guest-additions.iso
-    sudo mkdir /media/VBoxGuestAdditions
-    sudo mount -o loop,ro guest-additions.iso /media/VBoxGuestAdditions
-    sudo sh /media/VBoxGuestAdditions/VBoxLinuxAdditions.run
-    sudo umount /media/VBoxGuestAdditions
-    sudo rmdir /media/VBoxGuestAdditions
-    rm guest-additions.iso
   popd
 }
 
