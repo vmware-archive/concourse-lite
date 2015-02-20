@@ -23,10 +23,8 @@ function install_packer() {
     return
   fi
 
-  sudo apt-get -y install unzip
-
   pushd $1
-    wget https://dl.bintray.com/mitchellh/packer/packer_0.7.2_linux_amd64.zip -O packer.zip
+    wget https://dl.bintray.com/mitchellh/packer/0.7.2_linux_amd64.zip -O packer.zip
     unzip packer.zip
     rm packer.zip
   popd
@@ -42,7 +40,7 @@ export GOPATH=${lite_dir}/gopath
 mkdir -p $GOPATH
 export PATH=${GOPATH}/bin:$PATH
 
-sudo apt-get -y install golang git
+sudo apt-get -y install golang git unzip
 
 install_virtualbox
 install_packer ${packer_bin_dir}
