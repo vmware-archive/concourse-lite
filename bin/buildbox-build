@@ -11,6 +11,9 @@ function install_virtualbox() {
     return
   fi
 
+  # for building vboxdrv
+  sudo apt-get -y install build-essential
+
   pushd /tmp
     wget http://download.virtualbox.org/virtualbox/4.3.18/virtualbox-4.3_4.3.18-96516~Ubuntu~raring_amd64.deb -O virtualbox.deb
     sudo dpkg -i virtualbox.deb
@@ -19,8 +22,10 @@ function install_virtualbox() {
 }
 
 function install_packer() {
-  if [ -f "$1/packer" ] && [ "$($1/packer -v)" == "Packer v0.7.2" ]; then
-    return
+  if [ -f "$1/packer" ]; then
+    if $1/packer -v | grep v0.7.2; then
+      return
+    fi
   fi
 
   sudo apt-get -y install unzip
@@ -38,7 +43,7 @@ function install_packer_bosh() {
 
   pushd ${GOPATH}/src/github.com/cppforlife/packer-bosh >&2
     git submodule update --init --recursive >&2
-    go get -v ./...
+    go get -v ./main/...
     godep go build -o out/packer-bosh ./main
     echo -n $(pwd)/out/packer-bosh
   popd >&2
