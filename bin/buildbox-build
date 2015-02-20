@@ -19,13 +19,15 @@ function install_virtualbox() {
 }
 
 function install_packer() {
-  if [ -f "$1/packer" ]; then
+  if [ -f "$1/packer" ] && [ "$($1/packer -v)" == "Packer v0.7.2" ]; then
     return
   fi
 
+  sudo apt-get -y install unzip
+
   pushd $1
-    wget https://dl.bintray.com/mitchellh/packer/0.6.1_linux_amd64.zip -O packer.zip
-    unzip packer.zip
+    wget https://dl.bintray.com/mitchellh/packer/packer_0.7.2_linux_amd64.zip -O packer.zip
+    unzip -o packer.zip
     rm packer.zip
   popd
 }
@@ -36,6 +38,7 @@ function install_packer_bosh() {
 
   pushd ${GOPATH}/src/github.com/cppforlife/packer-bosh >&2
     git submodule update --init --recursive >&2
+    go get -v ./...
     godep go build -o out/packer-bosh ./main
     echo -n $(pwd)/out/packer-bosh
   popd >&2
@@ -51,7 +54,7 @@ export GOPATH=${lite_dir}/gopath
 mkdir -p $GOPATH
 export PATH=${GOPATH}/bin:$PATH
 
-sudo apt-get -y install golang git unzip
+sudo apt-get -y install golang git
 
 install_virtualbox
 install_packer ${packer_bin_dir}
