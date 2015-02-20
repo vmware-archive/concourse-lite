@@ -19,6 +19,9 @@ templates_dir=$(cd ${build_dir}/templates && pwd)
 
 ${bin_dir}/generate-concourse-manifest ${CONCOURSE_RELEASE_VERSION} ${GARDEN_LINUX_RELEASE_VERSION}
 
+# fetch assets; disregard provisioner binary
+${bin_dir}/fetch-packer-bosh
+
 rm -rf $(dirname $0)/../output-virtualbox-iso
 
 packer build -var "version=${CONCOURSE_RELEASE_VERSION}" \

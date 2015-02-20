@@ -19,15 +19,26 @@ function install_virtualbox() {
 }
 
 function install_packer() {
-  if [ -f "$1/packer" ] && [ "$($1/packer -v)" == "Packer v0.7.2" ]; then
+  if [ -f "$1/packer" ]; then
     return
   fi
 
   pushd $1
-    wget https://dl.bintray.com/mitchellh/packer/0.7.2_linux_amd64.zip -O packer.zip
+    wget https://dl.bintray.com/mitchellh/packer/0.6.1_linux_amd64.zip -O packer.zip
     unzip packer.zip
     rm packer.zip
   popd
+}
+
+function install_packer_bosh() {
+  go get -d github.com/cppforlife/packer-bosh >&2
+  go get github.com/tools/godep >&2
+
+  pushd ${GOPATH}/src/github.com/cppforlife/packer-bosh >&2
+    git submodule update --init --recursive >&2
+    godep go build -o out/packer-bosh ./main
+    echo -n $(pwd)/out/packer-bosh
+  popd >&2
 }
 
 lite_dir=$(cd $(dirname $0)/.. && pwd)
@@ -45,11 +56,20 @@ sudo apt-get -y install golang git unzip
 install_virtualbox
 install_packer ${packer_bin_dir}
 
+packer_bosh_provisioner=$(install_packer_bosh)
+cat > ${lite_dir}/.packerconfig <<EOF
+{
+  "provisioners": {
+    "packer-bosh": "${packer_bosh_provisioner}"
+  }
+}
+EOF
+
+export PACKER_CONFIG=${lite_dir}/.packerconfig
+
 cd ${lite_dir}
 
 # clear out old boxes so only one gets scp'd back
 rm -f *.box
-
-export PACKER_CONFIG=$(./bin/fetch-packer-bosh)
 
 ./bin/build-${PROVIDER} "$@"
