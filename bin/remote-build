@@ -3,20 +3,22 @@
 set -e -x
 
 SSH_TARGET=${1}
-PROVIDER=${2}
+SSH_PORT=${2}
+PROVIDER=${3}
 
+shift
 shift
 shift
 
 lite_root=$(cd $(dirname $0)/.. && pwd)
 
-rsync -a -P -e ssh \
+rsync -a -P -e "ssh -p ${SSH_PORT}" \
   --exclude '*.box' \
   --exclude .git \
   --exclude packer_cache \
   --exclude packer-bosh \
   ${lite_root}/ ${SSH_TARGET}:concourse-lite-buildbox/
 
-ssh -t ${SSH_TARGET} ./concourse-lite-buildbox/bin/buildbox-build ${PROVIDER} "$@"
+ssh -t -p ${SSH_PORT} ${SSH_TARGET} ./concourse-lite-buildbox/bin/buildbox-build ${PROVIDER} "$@"
 
-scp "${SSH_TARGET}:concourse-lite-buildbox/*.box" .
+scp -P ${SSH_PORT} "${SSH_TARGET}:concourse-lite-buildbox/*.box" .
