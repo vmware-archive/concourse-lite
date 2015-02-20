@@ -51,7 +51,7 @@ export GOPATH=${lite_dir}/gopath
 mkdir -p $GOPATH
 export PATH=${GOPATH}/bin:$PATH
 
-sudo apt-get -y install golang git
+sudo apt-get -y install golang git unzip
 
 install_virtualbox
 install_packer ${packer_bin_dir}
