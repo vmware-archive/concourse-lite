@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -e -x
 
 CONCOURSE_RELEASE_VERSION=${1}
 GARDEN_LINUX_RELEASE_VERSION=${2}
