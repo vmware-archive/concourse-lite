@@ -38,7 +38,7 @@ function install_packer() {
 }
 
 function install_packer_bosh() {
-  sudo apt-get -y install golang git mercurial
+  sudo apt-get -y install golang git mercurial >&2
 
   go get -d github.com/cppforlife/packer-bosh >&2
   go get github.com/tools/godep >&2
