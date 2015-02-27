@@ -5,6 +5,8 @@ set -e -x
 PROVIDER=${1}
 shift
 
+apt-get update
+
 function install_virtualbox() {
   if which VBoxManage >/dev/null 2>&1 && \
       VBoxManage --version | grep 4.3.18 >/dev/null 2>&1; then
@@ -12,11 +14,11 @@ function install_virtualbox() {
   fi
 
   # for building vboxdrv
-  sudo apt-get -y install build-essential
+  apt-get -y install build-essential
 
   pushd /tmp
     wget http://download.virtualbox.org/virtualbox/4.3.18/virtualbox-4.3_4.3.18-96516~Ubuntu~raring_amd64.deb -O virtualbox.deb
-    sudo dpkg -i virtualbox.deb
+    dpkg -i virtualbox.deb || apt-get -f -y install
     rm virtualbox.deb
   popd
 }
@@ -28,7 +30,7 @@ function install_packer() {
     fi
   fi
 
-  sudo apt-get -y install unzip
+  apt-get -y install unzip
 
   pushd $1
     wget https://dl.bintray.com/mitchellh/packer/packer_0.7.2_linux_amd64.zip -O packer.zip
@@ -38,7 +40,7 @@ function install_packer() {
 }
 
 function install_packer_bosh() {
-  sudo apt-get -y install golang git mercurial >&2
+  apt-get -y install golang git mercurial >&2
 
   go get -d github.com/cppforlife/packer-bosh >&2
   go get github.com/tools/godep >&2
