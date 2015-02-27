@@ -7,6 +7,8 @@ shift
 
 apt-get update
 
+apt-get -y install wget
+
 function install_virtualbox() {
   if which VBoxManage >/dev/null 2>&1 && \
       VBoxManage --version | grep 4.3.18 >/dev/null 2>&1; then
