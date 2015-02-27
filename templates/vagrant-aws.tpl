@@ -1,39 +1,39 @@
 # better error messages from Hash.fetch
 env = ENV.to_hash
 
-unless env.include?('AWS_ACCESS_KEY_ID') &&  env.include?('AWS_SECRET_ACCESS_KEY')
-  raise '$AWS_ACCESS_KEY_ID and $AWS_SECRET_ACCESS_KEY must be provided in the environment'
+unless env.include?("AWS_ACCESS_KEY_ID") &&  env.include?("AWS_SECRET_ACCESS_KEY")
+  raise "$AWS_ACCESS_KEY_ID and $AWS_SECRET_ACCESS_KEY must be provided in the environment"
 end
 
 def tags_from_environment(env)
-  env.fetch('INSTANCE_TAGS', "").split(",").collect { |t|
+  env.fetch("INSTANCE_TAGS", "").split(",").collect { |t|
     t.split("=")
   }.inject({
-    "Name" => env.fetch('INSTANCE_NAME', "Concourse"),
+    "Name" => env.fetch("INSTANCE_NAME", "Concourse"),
   }) do |tags, tag|
     tags[tag[0]] = tag[1]
     tags
   end
 end
 
-Vagrant.configure('2') do |config|
-  config.vm.hostname = 'bosh-lite'
-  config.vm.synced_folder '.', '/vagrant', disabled: true
+Vagrant.configure("2") do |config|
+  config.vm.hostname = "concourse"
+  config.vm.synced_folder ".", "/vagrant", disabled: true
 
-  config.ssh.username = 'ubuntu'
-  config.ssh.private_key_path = env.fetch('SSH_PRIVATE_KEY', '~/.ssh/id_rsa_bosh')
+  config.ssh.username = "ubuntu"
+  config.ssh.private_key_path = env.fetch("SSH_PRIVATE_KEY", "~/.ssh/id_rsa_bosh")
 
   config.vm.provider :aws do |v|
-    v.access_key_id =       env.fetch('AWS_ACCESS_KEY_ID')
-    v.secret_access_key =   env.fetch('AWS_SECRET_ACCESS_KEY')
-    v.keypair_name =        env.fetch('INSTANCE_KEYPAIR', 'bosh')
+    v.access_key_id =       env.fetch("AWS_ACCESS_KEY_ID")
+    v.secret_access_key =   env.fetch("AWS_SECRET_ACCESS_KEY")
+    v.keypair_name =        env.fetch("INSTANCE_KEYPAIR", "bosh")
     v.block_device_mapping = [{
-      :DeviceName => '/dev/sda1',
-      'Ebs.VolumeSize' => env.fetch('INSTANCE_DISK_SIZE', '50').to_i
+      :DeviceName => "/dev/sda1",
+      "Ebs.VolumeSize" => env.fetch("INSTANCE_DISK_SIZE", "50").to_i
     }]
-    v.instance_type =       env.fetch('INSTANCE_TYPE', 'm3.xlarge')
-    v.security_groups =     [env.fetch('INSTANCE_SECURITY_GROUP', 'inception')]
-    v.subnet_id =           env.fetch('INSTANCE_SUBNET_ID') if env.include?('INSTANCE_SUBNET_ID')
+    v.instance_type =       env.fetch("INSTANCE_TYPE", "m3.xlarge")
+    v.security_groups =     [env.fetch("INSTANCE_SECURITY_GROUP_ID", "inception")]
+    v.subnet_id =           env.fetch("INSTANCE_SUBNET_ID") if env.include?("INSTANCE_SUBNET_ID")
     v.tags =                tags_from_environment(env)
   end
 
@@ -47,21 +47,10 @@ if [ $public_ip_http_code == "404" ]; then
   local_ip=`curl -s #{meta_data_local_ip_url}`
   echo "There is no public IP for this instance"
   echo "The private IP for this instance is $local_ip"
-  echo "You can 'bosh target $local_ip', or run 'vagrant ssh' and then 'bosh target 127.0.0.1'"
 else
   public_ip=`curl -s #{meta_data_public_ip_url}`
   echo "The public IP for this instance is $public_ip"
-  echo "You can 'bosh target $public_ip', or run 'vagrant ssh' and then 'bosh target 127.0.0.1'"
 fi
   PUBLIC_IP_SCRIPT
   config.vm.provision :shell, id: "public_ip", run: "always", inline: PUBLIC_IP
-
-  PORT_FORWARDING = <<-IP_SCRIPT
-local_ip=`curl -s #{meta_data_local_ip_url}`
-echo "Setting up port forwarding for the CF Cloud Controller..."
-sudo iptables -t nat -A PREROUTING -p tcp -d $local_ip --dport 80 -j DNAT --to 10.244.0.34:80
-sudo iptables -t nat -A PREROUTING -p tcp -d $local_ip --dport 443 -j DNAT --to 10.244.0.34:443
-sudo iptables -t nat -A PREROUTING -p tcp -d $local_ip --dport 4443 -j DNAT --to 10.244.0.34:4443
-  IP_SCRIPT
-  config.vm.provision :shell, id: "port_forwarding", run: "always", inline: PORT_FORWARDING
 end
