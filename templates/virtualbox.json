@@ -1,6 +1,7 @@
 {
   "variables": {
-    "version": "0"
+    "version": "0",
+    "bosh_provisioner_assets": ""
   },
   "builders": [{
     "type": "virtualbox-iso",
@@ -88,7 +89,7 @@
     "destination": "/tmp/garden-linux.tgz"
   },{
     "type": "packer-bosh",
-    "assets_dir": "packer-bosh/assets",
+    "assets_dir": "{{user `bosh_provisioner_assets`}}",
     "manifest_path": "concourse_manifest.yml",
     "ssh_password": "vagrant"
   },{

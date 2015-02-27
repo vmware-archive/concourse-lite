@@ -19,5 +19,7 @@ cd ${build_dir}
 
 ./bin/generate-concourse-manifest ${CONCOURSE_RELEASE_VERSION} ${GARDEN_LINUX_RELEASE_VERSION}
 
-packer build -var "version=${CONCOURSE_RELEASE_VERSION}" \
+packer build \
+  -var "version=${CONCOURSE_RELEASE_VERSION}" \
+  -var "bosh_provisioner_assets=/opt/local/go/src/github.com/cppforlife/packer-bosh/bosh-provisioner/assets" \
   ./templates/virtualbox.json
