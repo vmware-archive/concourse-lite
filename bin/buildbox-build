@@ -7,6 +7,11 @@ shift
 
 apt-get update
 
+if ! [ -e /dev/vboxdrv ]; then
+  # this won't exist in the container
+  mknod -m 0600 /dev/vboxdrv c 10 57
+fi
+
 apt-get -y install wget
 
 function install_virtualbox() {
