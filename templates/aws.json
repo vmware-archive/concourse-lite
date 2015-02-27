@@ -36,6 +36,14 @@
       "scripts/vagrant-pub-key.sh"
     ]
   },{
+    "type": "file",
+    "source": "concourse.tgz",
+    "destination": "/tmp/concourse.tgz"
+  },{
+    "type": "file",
+    "source": "garden-linux.tgz",
+    "destination": "/tmp/garden-linux.tgz"
+  },{
     "type": "packer-bosh",
     "assets_dir": "/opt/local/go/src/github.com/cppforlife/packer-bosh/bosh-provisioner/assets",
     "manifest_path": "concourse_manifest.yml",
