@@ -1,0 +1,18 @@
+#!/bin/sh
+
+set -e -x
+
+INSTALL_DIR=${1}
+if [ -z "$INSTALL_DIR" ]; then
+  echo "usage: $0 <install dir>" >&2
+  exit 1
+fi
+
+go get -d github.com/cppforlife/packer-bosh/main
+go get github.com/tools/godep
+
+cd ${GOPATH}/src/github.com/cppforlife/packer-bosh
+
+git submodule update --init --recursive
+go get -v ./main/...
+godep go build -o ${INSTALL_DIR}/packer-bosh ./main
