@@ -22,13 +22,13 @@ jobs:
       - {release: concourse, name: gate}
       - {release: concourse, name: postgresql}
       - {release: garden-linux, name: garden}
-      - {release: concourse, name: consul-agent}
     properties:
       atc:
         # turn off and provide auth for a real vagrant instance
         development_mode: true
 
         postgresql:
+          address: 127.0.0.1:5432
           role: &atc-role
             name: atc
             password: dummy-password
@@ -38,19 +38,15 @@ jobs:
         roles:
           - *atc-role
 
+      gate:
+        atc:
+          address: 127.0.0.1:8080
+
       garden:
         listen_network: tcp
         listen_address: 0.0.0.0:7777
 
         allow_host_access: true
-
-      consul:
-        agent:
-          mode: server
-          services:
-            - name: atc
-            - name: postgresql
-            - name: garden
 
 compilation:
   network: concourse
