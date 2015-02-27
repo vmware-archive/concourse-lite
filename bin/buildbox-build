@@ -5,8 +5,6 @@ set -e -x
 PROVIDER=${1}
 shift
 
-apt-get update
-
 mkdir /tmp/devices-cgroup
 mount -t cgroup -o devices none /tmp/devices-cgroup
 
@@ -16,6 +14,8 @@ if ! [ -e /dev/vboxdrv ]; then
   # this won't exist in the container
   mknod -m 0600 /dev/vboxdrv c 10 57
 fi
+
+apt-get update
 
 apt-get -y install wget
 
