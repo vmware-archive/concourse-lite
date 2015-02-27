@@ -13,11 +13,11 @@ function usage() {
 [ -n "$CONCOURSE_RELEASE_VERSION" ] || usage
 [ -n "$GARDEN_LINUX_RELEASE_VERSION" ] || usage
 
-bin_dir=$(dirname $0)
 build_dir=$(cd $(dirname $0)/.. && pwd)
-templates_dir=$(cd ${build_dir}/templates && pwd)
 
-${bin_dir}/generate-concourse-manifest ${CONCOURSE_RELEASE_VERSION} ${GARDEN_LINUX_RELEASE_VERSION}
+cd ${build_dir}
+
+./bin/generate-concourse-manifest ${CONCOURSE_RELEASE_VERSION} ${GARDEN_LINUX_RELEASE_VERSION}
 
 packer build -var "version=${CONCOURSE_RELEASE_VERSION}" \
-  ${templates_dir}/virtualbox.json
+  ./templates/virtualbox.json
