@@ -21,5 +21,4 @@ cd ${build_dir}
 
 packer build \
   -var "version=${CONCOURSE_RELEASE_VERSION}" \
-  -var "bosh_provisioner_assets=/opt/local/go/src/github.com/cppforlife/packer-bosh/bosh-provisioner/assets" \
   ./templates/virtualbox.json

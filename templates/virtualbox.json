@@ -1,7 +1,6 @@
 {
   "variables": {
-    "version": "0",
-    "bosh_provisioner_assets": ""
+    "version": "0"
   },
   "builders": [{
     "type": "virtualbox-iso",
@@ -89,7 +88,7 @@
     "destination": "/tmp/garden-linux.tgz"
   },{
     "type": "packer-bosh",
-    "assets_dir": "{{user `bosh_provisioner_assets`}}",
+    "assets_dir": "/opt/local/go/src/github.com/cppforlife/packer-bosh/bosh-provisioner/assets",
     "manifest_path": "concourse_manifest.yml",
     "ssh_password": "vagrant"
   },{
