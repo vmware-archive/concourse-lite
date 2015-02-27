@@ -1,0 +1,17 @@
+---
+platform: linux
+
+image: docker:///concourse/buildbox-ci
+
+params:
+  AWS_ACCESS_KEY_ID:
+  AWS_SECRET_ACCESS_KEY:
+
+inputs:
+  - name: final-release
+  - name: garden-linux-release
+  - name: concourse-lite
+  - name: deployments
+
+run:
+  path: ./concourse-lite/ci/scripts/build-aws

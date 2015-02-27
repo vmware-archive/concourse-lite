@@ -1,20 +1,19 @@
 # better error messages from Hash.fetch
 env = ENV.to_hash
 
-unless env.include?('BOSH_AWS_ACCESS_KEY_ID') &&  env.include?('BOSH_AWS_SECRET_ACCESS_KEY')
-  raise 'BOSH_AWS_ACCESS_KEY_ID and BOSH_AWS_SECRET_ACCESS_KEY must be provided in the environment'
+unless env.include?('AWS_ACCESS_KEY_ID') &&  env.include?('AWS_SECRET_ACCESS_KEY')
+  raise '$AWS_ACCESS_KEY_ID and $AWS_SECRET_ACCESS_KEY must be provided in the environment'
 end
 
 def tags_from_environment(env)
-  values = [env.fetch('BOSH_LITE_NAME', 'Vagrant')]
-  values.concat env.fetch('BOSH_LITE_TAG_VALUES', '').chomp.split(', ')
-
-  keys = ['Name']
-  keys.concat env.fetch('BOSH_LITE_TAG_KEYS', '').chomp.split(', ')
-
-  raise 'Please provide the same number of keys and values!' if keys.length != values.length
-
-  Hash[keys.zip(values)]
+  env.fetch('INSTANCE_TAGS', "").split(",").collect { |t|
+    t.split("=")
+  }.inject({
+    "Name" => env.fetch('INSTANCE_NAME', "Concourse"),
+  }) do |tags, tag|
+    tags[tag[0]] = tag[1]
+    tags
+  end
 end
 
 Vagrant.configure('2') do |config|
@@ -22,19 +21,19 @@ Vagrant.configure('2') do |config|
   config.vm.synced_folder '.', '/vagrant', disabled: true
 
   config.ssh.username = 'ubuntu'
-  config.ssh.private_key_path = env.fetch('BOSH_LITE_PRIVATE_KEY', '~/.ssh/id_rsa_bosh')
+  config.ssh.private_key_path = env.fetch('SSH_PRIVATE_KEY', '~/.ssh/id_rsa_bosh')
 
   config.vm.provider :aws do |v|
-    v.access_key_id =       env.fetch('BOSH_AWS_ACCESS_KEY_ID')
-    v.secret_access_key =   env.fetch('BOSH_AWS_SECRET_ACCESS_KEY')
-    v.keypair_name =        env.fetch('BOSH_LITE_KEYPAIR', 'bosh')
+    v.access_key_id =       env.fetch('AWS_ACCESS_KEY_ID')
+    v.secret_access_key =   env.fetch('AWS_SECRET_ACCESS_KEY')
+    v.keypair_name =        env.fetch('INSTANCE_KEYPAIR', 'bosh')
     v.block_device_mapping = [{
       :DeviceName => '/dev/sda1',
-      'Ebs.VolumeSize' => env.fetch('BOSH_LITE_DISK_SIZE', '50').to_i
+      'Ebs.VolumeSize' => env.fetch('INSTANCE_DISK_SIZE', '50').to_i
     }]
-    v.instance_type =       env.fetch('BOSH_LITE_INSTANCE_TYPE', 'm3.xlarge')
-    v.security_groups =     [env.fetch('BOSH_LITE_SECURITY_GROUP', 'inception')]
-    v.subnet_id =           env.fetch('BOSH_LITE_SUBNET_ID') if env.include?('BOSH_LITE_SUBNET_ID')
+    v.instance_type =       env.fetch('INSTANCE_TYPE', 'm3.xlarge')
+    v.security_groups =     [env.fetch('INSTANCE_SECURITY_GROUP', 'inception')]
+    v.subnet_id =           env.fetch('INSTANCE_SUBNET_ID') if env.include?('INSTANCE_SUBNET_ID')
     v.tags =                tags_from_environment(env)
   end
 

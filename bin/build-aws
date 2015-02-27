@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -e -x
+
+CONCOURSE_RELEASE_VERSION=${1}
+GARDEN_LINUX_RELEASE_VERSION=${2}
+
+function usage() {
+  echo "usage: $0 CONCOURSE_RELEASE_VERSION GARDEN_LINUX_RELEASE_VERSION" >&2
+  exit 1
+}
+
+if [ -z "$AWS_ACCESS_KEY_ID" ] || [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
+  echo "must specify \$AWS_ACCESS_KEY_ID and \$AWS_SECRET_ACCESS_KEY" >&2
+  exit 1
+fi
+
+[ -n "$CONCOURSE_RELEASE_VERSION" ] || usage
+[ -n "$GARDEN_LINUX_RELEASE_VERSION" ] || usage
+
+build_dir=$(cd $(dirname $0)/.. && pwd)
+
+cd ${build_dir}
+
+./bin/generate-concourse-manifest ${CONCOURSE_RELEASE_VERSION} ${GARDEN_LINUX_RELEASE_VERSION}
+
+packer build \
+  -var "version=${CONCOURSE_RELEASE_VERSION}" \
+  ./templates/aws.json

@@ -2,16 +2,16 @@
   "variables": {
     "base_ami": "ami-d2ff23ba",
     "region": "us-east-1",
-    "build_number": "0"
+    "version": "0"
   },
   "builders": [{
     "type": "amazon-ebs",
-    "ami_name": "boshlite-{{user `build_number`}}",
+    "ami_name": "concourse-{{user `version`}}",
     "instance_type": "m1.large",
     "region": "{{user `region`}}",
     "source_ami":  "{{user `base_ami`}}",
     "ssh_username": "ubuntu",
-    "ami_description": "Bosh-lite AMI (build {{user `build_number`}})"
+    "ami_description": "Concourse AMI (version {{user `version`}})"
   }],
   "provisioners": [{
     "type": "shell",
@@ -37,8 +37,8 @@
     ]
   },{
     "type": "packer-bosh",
-    "assets_dir": "packer-bosh/assets",
-    "manifest_path": "bosh_lite_manifest.yml",
+    "assets_dir": "/opt/local/go/src/github.com/cppforlife/packer-bosh/bosh-provisioner/assets",
+    "manifest_path": "concourse_manifest.yml",
     "ssh_password": "vagrant"
   },{
     "type": "shell",
@@ -56,6 +56,6 @@
     "type": "vagrant",
     "keep_input_artifact": true,
     "vagrantfile_template": "templates/vagrant-aws.tpl",
-    "output": "bosh-lite-{{ .Provider }}-ubuntu-trusty-{{user `build_number`}}.box"
+    "output": "concourse-{{ .Provider }}-ubuntu-trusty-{{user `version`}}.box"
   }]
 }
