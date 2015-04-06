@@ -42,6 +42,10 @@ jobs:
         atc:
           address: 127.0.0.1:8080
 
+      groundcrew:
+        tsa:
+          host: 127.0.0.1
+
       garden:
         listen_network: tcp
         listen_address: 0.0.0.0:7777
