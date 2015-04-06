@@ -57,6 +57,6 @@ compilation:
 
 update:
   canaries: 0
-  canary_watch_time: 1000-600000
-  update_watch_time: 1000-600000
+  canary_watch_time: 1000-60000
+  update_watch_time: 1000-60000
   max_in_flight: 10
