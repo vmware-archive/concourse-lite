@@ -1,7 +1,7 @@
 ---
 platform: linux
 
-image: docker:///concourse/buildbox-ci
+image: docker:///concourse/buildbox-ci#dev
 
 params:
   AWS_ACCESS_KEY_ID:
