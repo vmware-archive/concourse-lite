@@ -6,7 +6,7 @@ FROM ubuntu:14.04
 RUN apt-get update && apt-get -y install build-essential unzip golang git mercurial
 
 # install virtualbox
-ADD http://download.virtualbox.org/virtualbox/4.3.18/virtualbox-4.3_4.3.18-96516~Ubuntu~raring_amd64.deb /tmp/virtualbox.deb
+ADD http://download.virtualbox.org/virtualbox/4.3.26/virtualbox-4.3_4.3.26-98988~Ubuntu~raring_amd64.deb /tmp/virtualbox.deb
 RUN dpkg -i /tmp/virtualbox.deb || apt-get -y -f install
 RUN rm /tmp/virtualbox.deb
 
