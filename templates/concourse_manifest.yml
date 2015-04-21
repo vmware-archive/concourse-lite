@@ -45,6 +45,9 @@ jobs:
       groundcrew:
         tsa:
           host: 127.0.0.1
+        
+        garden:
+          address: 127.0.0.1:7777
 
       garden:
         listen_network: tcp
