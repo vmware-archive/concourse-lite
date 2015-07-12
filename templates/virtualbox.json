@@ -99,6 +99,7 @@
       "scripts/add-vcap-to-vagrant.sh",
       "scripts/set-temp-dir.sh",
       "scripts/clean-up.sh",
+      "scripts/clean-up-garden.sh",
       "scripts/shrink-disk.sh"
     ]
   }],
