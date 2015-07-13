@@ -55,6 +55,8 @@ jobs:
 
         allow_host_access: true
 
+        btrfs_store_size_mb: 64000
+
 compilation:
   network: concourse
 

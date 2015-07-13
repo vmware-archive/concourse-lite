@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
     v.keypair_name =        env.fetch("INSTANCE_KEYPAIR", "bosh")
     v.block_device_mapping = [{
       :DeviceName => "/dev/sda1",
-      "Ebs.VolumeSize" => env.fetch("INSTANCE_DISK_SIZE", "50").to_i
+      "Ebs.VolumeSize" => env.fetch("INSTANCE_DISK_SIZE", "80").to_i
     }]
     v.instance_type =       env.fetch("INSTANCE_TYPE", "m3.xlarge")
     v.security_groups =     [env.fetch("INSTANCE_SECURITY_GROUP_ID", "inception")]
