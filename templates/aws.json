@@ -1,7 +1,7 @@
 {
   "variables": {
     "comment": "trusty us-east-1 ssd",
-    "base_ami": "ami-5d72d936",
+    "base_ami": "ami-77b30e1c",
     "region": "us-east-1",
     "version": "0"
   },
