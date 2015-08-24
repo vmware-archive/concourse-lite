@@ -1,5 +1,2 @@
-man mount | echo
-
-umount /var/vcap/data/garden/btrfs_graph
-losetup -d $(losetup -j /var/vcap/data/garden/garden_graph_backing_store | cut -d: -f1)
+umount -d -l /var/vcap/data/garden/btrfs_graph
 rm -rf /var/vcap/data/garden
