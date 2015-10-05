@@ -22,6 +22,7 @@ jobs:
       - {release: concourse, name: tsa}
       - {release: concourse, name: groundcrew}
       - {release: concourse, name: postgresql}
+      - {release: concourse, name: baggageclaim}
       - {release: garden-linux, name: garden}
     properties:
       atc:
@@ -45,17 +46,18 @@ jobs:
       groundcrew:
         tsa:
           host: 127.0.0.1
-        
+
         garden:
           address: 127.0.0.1:7777
+
+        baggageclaim:
+          url: http://127.0.0.1:7788
 
       garden:
         listen_network: tcp
         listen_address: 0.0.0.0:7777
 
         allow_host_access: true
-
-        btrfs_store_size_mb: 64000
 
 compilation:
   network: concourse
