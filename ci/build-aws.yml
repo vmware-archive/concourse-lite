@@ -8,9 +8,12 @@ params:
   AWS_SECRET_ACCESS_KEY:
 
 inputs:
-  - name: final-release
-  - name: garden-linux-release
-  - name: concourse-lite
+- name: final-release
+- name: garden-linux-release
+- name: concourse-lite
+
+outputs:
+- name: built-box
 
 run:
   path: ./concourse-lite/ci/scripts/build-aws

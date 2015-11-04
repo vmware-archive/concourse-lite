@@ -2,6 +2,8 @@
 
 set -e -x
 
+BUILT_BOX=$PWD/built-box
+
 CONCOURSE_RELEASE_VERSION=$(cat final-release/version)
 GARDEN_LINUX_RELEASE_VERSION=$(cat garden-linux-release/version)
 
@@ -11,3 +13,5 @@ cp garden-linux-release/*.tgz concourse-lite/garden-linux.tgz
 ./concourse-lite/bin/build-aws \
   ${CONCOURSE_RELEASE_VERSION} \
   ${GARDEN_LINUX_RELEASE_VERSION}
+
+mv *.box $BUILT_BOX
