@@ -14,4 +14,4 @@ cp garden-linux-release/*.tgz concourse-lite/garden-linux.tgz
   ${CONCOURSE_RELEASE_VERSION} \
   ${GARDEN_LINUX_RELEASE_VERSION}
 
-mv *.box $BUILT_BOX
+mv concourse-lite/*.box $BUILT_BOX
