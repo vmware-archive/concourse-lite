@@ -1,14 +1,13 @@
 FROM ubuntu:15.10
 
-# build-essential      : for building virtualbox's vboxdrv
+# add sources for virtualbox
+RUN echo 'deb http://archive.ubuntu.com/ubuntu/ wily multiverse' >> /etc/apt/sources.list
+RUN echo 'deb-src http://archive.ubuntu.com/ubuntu/ wily multiverse' >> /etc/apt/sources.list
+
+# virtualbox           : for building the images
 # unzip                : for installing packer
 # golang git mercurial : for building packer-bosh
-RUN apt-get update && apt-get -y install build-essential unzip golang git mercurial
-
-# install virtualbox
-ADD http://download.virtualbox.org/virtualbox/4.3.26/virtualbox-4.3_4.3.26-98988~Ubuntu~raring_amd64.deb /tmp/virtualbox.deb
-RUN dpkg -i /tmp/virtualbox.deb || apt-get -y -f install
-RUN rm /tmp/virtualbox.deb
+RUN apt-get update && apt-get -y install virtualbox unzip golang git mercurial
 
 # set up directories/env for packer + packer-bosh
 RUN mkdir -p /opt/local/bin /opt/local/go
