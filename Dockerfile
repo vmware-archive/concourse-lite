@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:15.10
 
 # build-essential      : for building virtualbox's vboxdrv
 # unzip                : for installing packer
