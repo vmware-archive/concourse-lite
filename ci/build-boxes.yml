@@ -1,0 +1,15 @@
+---
+platform: linux
+
+image: docker:///concourse/buildbox-ci
+
+inputs:
+- name: final-release
+- name: garden-linux-release
+- name: concourse-lite
+
+outputs:
+- name: built-box
+
+run:
+  path: ./concourse-lite/ci/scripts/build-boxes
