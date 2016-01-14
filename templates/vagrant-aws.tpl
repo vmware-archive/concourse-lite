@@ -52,5 +52,10 @@ else
   echo "The public IP for this instance is $public_ip"
 fi
   PUBLIC_IP_SCRIPT
-  config.vm.provision :shell, id: "public_ip", run: "always", inline: PUBLIC_IP
+
+  if Vagrant::VERSION =~ /^1.[0-6]/
+    config.vm.provision :shell, id: "public_ip", run: "always", inline: PUBLIC_IP
+  else
+    config.vm.provision "public_ip", type: "shell", run: "always", inline: PUBLIC_IP
+  end
 end
