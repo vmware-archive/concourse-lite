@@ -26,6 +26,8 @@ jobs:
       - {release: garden-linux, name: garden}
     properties:
       atc:
+        external_url: http://192.168.100.4:8080
+
         development_mode: true
 
         postgresql:
