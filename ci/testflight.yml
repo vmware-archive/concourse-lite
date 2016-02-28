@@ -6,7 +6,7 @@ image_resource:
   source: {repository: concourse/buildbox-testflight-ci}
 
 inputs:
-- name: built-box
+- name: virtualbox-box
 - name: concourse
 - name: concourse-lite
 
