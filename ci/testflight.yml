@@ -1,0 +1,14 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source: {repository: concourse/buildbox-testflight-ci}
+
+inputs:
+- name: built-box
+- name: concourse
+- name: concourse-lite
+
+run:
+  path: ./concourse-lite/ci/scripts/testflight
