@@ -20,11 +20,6 @@ function containers_gone_wild() {
 
 containers_gone_wild
 
-# shim these in for garden-systemd (doesn't support ENV rules)
-export GOPATH=/opt/local/go
-export PATH=/opt/local/bin:/opt/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-export PACKER_CONFIG=/opt/local/packerconfig
-
 ./concourse-lite/bin/build-virtualbox \
   ${CONCOURSE_RELEASE_VERSION} \
   ${GARDEN_LINUX_RELEASE_VERSION}
