@@ -9,6 +9,12 @@ mknod -m 0666 /dev/vboxdrvu c 10 57
 mknod -m 0600 /dev/vboxnetctl c 10 56
 
 vagrant init concourse-lite ./virtualbox-box/*.box
+
+# clear out existing hostonlyifs (possibly from previous runs)
+for name in $(VBoxManage list hostonlyifs | grep '^Name:' | awk '{print $NF}'); do
+  VBoxManage hostonlyif remove $name
+done
+
 vagrant up
 
 cd concourse/
