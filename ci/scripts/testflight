@@ -11,7 +11,14 @@ mknod -m 0600 /dev/vboxnetctl c 10 56
 vagrant init concourse-lite ./virtualbox-box/*.box
 vagrant up
 
-cd concourse/src/github.com/concourse/testflight
+cd concourse/
+
+export GOPATH=$PWD
+export PATH=$PWD/bin:$PATH
+
+go install github.com/onsi/ginkgo/ginkgo
+
+cd src/github.com/concourse/testflight
 
 export ATC_URL=http://192.168.100.4:8080
 
