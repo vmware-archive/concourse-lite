@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e -x
+set -e -u -x
 
 BUILT_BOX=$PWD/built-box
 
