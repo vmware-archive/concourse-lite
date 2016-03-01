@@ -50,10 +50,10 @@ jobs:
           host: 127.0.0.1
 
         garden:
-          address: 127.0.0.1:7777
+          address: 192.168.100.4:7777
 
         baggageclaim:
-          url: http://127.0.0.1:7788
+          url: http://192.168.100.4:7788
 
       garden:
         listen_network: tcp
