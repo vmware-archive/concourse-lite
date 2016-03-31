@@ -80,24 +80,35 @@
     "inline": "echo 'vagrant' | sudo -S usermod -a -G admin vagrant"
   },{
     "type": "file",
-    "source": "concourse.tgz",
-    "destination": "/tmp/concourse.tgz"
-  },{
-    "type": "file",
-    "source": "garden-linux.tgz",
-    "destination": "/tmp/garden-linux.tgz"
-  },{
-    "type": "packer-bosh",
-    "assets_dir": "/opt/local/go/src/github.com/cppforlife/packer-bosh/bosh-provisioner/assets",
-    "manifest_path": "concourse_manifest.yml",
-    "ssh_password": "vagrant"
+    "source": "concourse_linux_amd64",
+    "destination": "/tmp/concourse"
   },{
     "type": "shell",
     "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -S -E {{ .Path }}",
-    "remote_path": "/opt/bosh-provisioner/packer-shell.sh",
+    "inline": "install /tmp/concourse /usr/local/bin/concourse"
+  },{
+    "type": "file",
+    "source": "upstart/concourse-worker.conf",
+    "destination": "/tmp/concourse-worker.conf"
+  },{
+    "type": "file",
+    "source": "upstart/concourse-web.conf",
+    "destination": "/tmp/concourse-web.conf"
+  },{
+    "type": "shell",
+    "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -S -E {{ .Path }}",
+    "inline": "mv /tmp/concourse-*.conf /etc/init"
+  },{
+    "type": "shell",
+    "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -S -E {{ .Path }}",
     "scripts": [
-      "scripts/add-vcap-to-vagrant.sh",
-      "scripts/set-temp-dir.sh",
+      "scripts/generate-concourse-keys.sh",
+      "scripts/setup-postgresql.sh"
+    ]
+  },{
+    "type": "shell",
+    "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -S -E {{ .Path }}",
+    "scripts": [
       "scripts/clean-up.sh",
       "scripts/shrink-disk.sh"
     ]

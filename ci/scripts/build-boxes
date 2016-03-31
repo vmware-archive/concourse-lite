@@ -6,14 +6,10 @@ source $(dirname $0)/lib/vbox.sh
 
 BUILT_BOX=$PWD/built-box
 
-CONCOURSE_RELEASE_VERSION=$(cat final-release/version)
-GARDEN_LINUX_RELEASE_VERSION=$(cat garden-linux-release/version)
+CONCOURSE_RELEASE_VERSION=$(cat version/version)
 
-cp final-release/*.tgz concourse-lite/concourse.tgz
-cp garden-linux-release/*.tgz concourse-lite/garden-linux.tgz
+cp binaries/concourse_linux_amd64 concourse-lite/concourse_linux_amd64
 
-./concourse-lite/bin/build-virtualbox \
-  ${CONCOURSE_RELEASE_VERSION} \
-  ${GARDEN_LINUX_RELEASE_VERSION}
+./concourse-lite/bin/build-virtualbox ${CONCOURSE_RELEASE_VERSION}
 
 mv concourse-lite/*.box $BUILT_BOX

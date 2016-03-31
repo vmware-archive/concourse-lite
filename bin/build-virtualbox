@@ -3,21 +3,17 @@
 set -e -x
 
 CONCOURSE_RELEASE_VERSION=${1}
-GARDEN_LINUX_RELEASE_VERSION=${2}
 
 function usage() {
-  echo "usage: $0 CONCOURSE_RELEASE_VERSION GARDEN_LINUX_RELEASE_VERSION" >&2
+  echo "usage: $0 CONCOURSE_RELEASE_VERSION" >&2
   exit 1
 }
 
 [ -n "$CONCOURSE_RELEASE_VERSION" ] || usage
-[ -n "$GARDEN_LINUX_RELEASE_VERSION" ] || usage
 
 build_dir=$(cd $(dirname $0)/.. && pwd)
 
 cd ${build_dir}
-
-./bin/generate-concourse-manifest ${CONCOURSE_RELEASE_VERSION} ${GARDEN_LINUX_RELEASE_VERSION}
 
 packer build \
   -var "version=${CONCOURSE_RELEASE_VERSION}" \

@@ -1,5 +1,0 @@
-{
-  "provisioners": {
-    "packer-bosh": "/opt/local/bin/packer-bosh"
-  }
-}

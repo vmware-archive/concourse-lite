@@ -6,9 +6,9 @@ image_resource:
   source: {repository: concourse/buildbox-ci}
 
 inputs:
-- name: final-release
-- name: garden-linux-release
 - name: concourse-lite
+- name: binaries
+- name: version
 
 outputs:
 - name: built-box
