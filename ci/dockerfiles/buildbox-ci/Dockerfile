@@ -15,11 +15,5 @@ ENV GOPATH /opt/local/go
 ENV PATH /opt/local/bin:/opt/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # install packer
-ADD https://dl.bintray.com/mitchellh/packer/packer_0.7.2_linux_amd64.zip /tmp/packer.zip
+ADD https://releases.hashicorp.com/packer/0.10.0/packer_0.10.0_linux_amd64.zip /tmp/packer.zip
 RUN unzip -d /opt/local/bin /tmp/packer.zip && rm /tmp/packer.zip
-
-# install and configure packer-bosh provisioner
-ADD box-setup/install-packer-bosh /tmp/install-packer-bosh
-ADD box-setup/packerconfig /opt/local/packerconfig
-RUN /tmp/install-packer-bosh /opt/local/bin && rm /tmp/install-packer-bosh
-ENV PACKER_CONFIG /opt/local/packerconfig
