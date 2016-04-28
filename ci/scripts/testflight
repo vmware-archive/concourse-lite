@@ -12,10 +12,19 @@ cd concourse/
 export GOPATH=$PWD
 export PATH=$PWD/bin:$PATH
 
+go install github.com/concourse/fly
+
 go install github.com/onsi/ginkgo/ginkgo
 
 cd src/github.com/concourse/testflight
 
 export ATC_URL=http://192.168.100.4:8080
+
+fly -t local login -c "$ATC_URL"
+
+until [ "$(fly -t local workers | wc -l)" != 0 ]; do
+  echo "waiting for workers..."
+  sleep 1
+done
 
 xvfb-run ginkgo -r -race
