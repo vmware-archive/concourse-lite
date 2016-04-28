@@ -7,6 +7,8 @@ source $(dirname $0)/lib/vbox.sh
 vagrant init concourse-lite ./virtualbox-box/*.box
 vagrant up
 
+trap "cd $PWD && vagrant halt -f" EXIT
+
 cd concourse/
 
 export GOPATH=$PWD
