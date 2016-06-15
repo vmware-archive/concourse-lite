@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -e -x
+
+CONCOURSE_RELEASE_VERSION=${1}
+
+function usage() {
+  echo "usage: $0 CONCOURSE_RELEASE_VERSION" >&2
+  exit 1
+}
+
+[ -n "$CONCOURSE_RELEASE_VERSION" ] || usage
+
+build_dir=$(cd $(dirname $0)/.. && pwd)
+
+cd ${build_dir}
+
+packer build \
+  -var "version=${CONCOURSE_RELEASE_VERSION}" \
+  ./templates/vmware.json

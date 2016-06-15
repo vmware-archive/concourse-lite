@@ -46,7 +46,7 @@
 
     "disk_size": 81920,
 
-    "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
+    "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
 
     "vmx_data": {
       "memsize": "2048",
@@ -76,18 +76,36 @@
     "type": "shell",
     "inline": "echo 'vagrant' | sudo -S usermod -a -G admin vagrant"
   },{
-    "type": "packer-bosh",
-    "assets_dir": "packer-bosh/assets",
-    "manifest_path": "bosh_lite_manifest.yml",
-    "ssh_password": "vagrant"
+    "type": "file",
+    "source": "concourse_linux_amd64",
+    "destination": "/tmp/concourse"
   },{
     "type": "shell",
     "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -S -E {{ .Path }}",
-    "remote_path": "/opt/bosh-provisioner/packer-shell.sh",
+    "inline": "install /tmp/concourse /usr/local/bin/concourse"
+  },{
+    "type": "file",
+    "source": "upstart/concourse-worker.conf",
+    "destination": "/tmp/concourse-worker.conf"
+  },{
+    "type": "file",
+    "source": "upstart/concourse-web.conf",
+    "destination": "/tmp/concourse-web.conf"
+  },{
+    "type": "shell",
+    "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -S -E {{ .Path }}",
+    "inline": "mv /tmp/concourse-*.conf /etc/init"
+  },{
+    "type": "shell",
+    "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -S -E {{ .Path }}",
     "scripts": [
-      "scripts/add-vcap-to-vagrant.sh",
-      "scripts/set-temp-dir.sh",
-      "scripts/install-cli-tools.sh",
+      "scripts/generate-concourse-keys.sh",
+      "scripts/setup-postgresql.sh"
+    ]
+  },{
+    "type": "shell",
+    "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -S -E {{ .Path }}",
+    "scripts": [
       "scripts/clean-up.sh",
       "scripts/shrink-disk.sh"
     ]
@@ -97,6 +115,6 @@
     "type": "vagrant",
     "keep_input_artifact": true,
     "vagrantfile_template": "templates/vagrant-local.tpl",
-    "output": "bosh-lite-{{ .Provider }}-ubuntu-trusty-{{user `build_number`}}.box"
+    "output": "concourse-{{ .Provider }}-ubuntu-trusty-{{user `build_number`}}.box"
   }]
 }
