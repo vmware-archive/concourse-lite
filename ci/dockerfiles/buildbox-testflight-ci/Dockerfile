@@ -2,11 +2,11 @@ FROM concourse/atc-ci
 
 # install virtualbox
 RUN echo 'deb http://download.virtualbox.org/virtualbox/debian xenial contrib' >> /etc/apt/sources.list
-RUN apt-get update && apt-get -y --force-yes install virtualbox-5.1
+RUN apt-get update && apt-get -y install virtualbox-5.1
 
 # install 'lsmod' so virtualbox can detect vboxdrv module is loaded
 # have to install oder libkmod2 package for this atm
-RUN apt-get -y --force-yes install libkmod2=18-3ubuntu1 module-init-tools
+RUN apt-get -y install libkmod2 module-init-tools
 
 # for making Virtualbox's hostonlyifs work since it shells to ifconfig
 RUN apt-get update && apt-get -y install net-tools
