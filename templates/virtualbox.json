@@ -54,7 +54,8 @@
 
     "vboxmanage": [
       [ "modifyvm", "{{ .Name }}", "--memory", "1024" ],
-      [ "modifyvm", "{{ .Name }}", "--cpus", "1" ]
+      [ "modifyvm", "{{ .Name }}", "--cpus", "1" ],
+      [ "modifyvm", "{{ .Name }}", "--cableconnected1", "on"]
     ]
   }],
 
