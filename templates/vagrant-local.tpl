@@ -1,5 +1,5 @@
-VM_MEMORY = ENV.fetch('VM_MEMORY', 6*1024).to_i
-VM_CORES = ENV.fetch('VM_CORES', 4).to_i
+VM_MEMORY = ENV.fetch('VM_MEMORY', 2*1024).to_i
+VM_CORES = ENV.fetch('VM_CORES', 2).to_i
 
 Vagrant.configure('2') do |config|
   config.vm.network :private_network, ip: '192.168.100.4', id: :local
