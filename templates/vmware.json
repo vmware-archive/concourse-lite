@@ -50,7 +50,7 @@
 
     "vmx_data": {
       "memsize": "2048",
-      "numvcpus": "4",
+      "numvcpus": "2",
       "cpuid.coresPerSocket": "1"
     }
   }],
