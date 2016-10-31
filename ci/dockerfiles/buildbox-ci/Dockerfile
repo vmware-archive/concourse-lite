@@ -1,4 +1,4 @@
-FROM greyltc/archlinux:2016-08-21
+FROM greyltc/archlinux:2016-10-23
 
 RUN pacman -Syu --noconfirm virtualbox unzip
 
