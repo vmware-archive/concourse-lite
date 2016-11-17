@@ -29,4 +29,4 @@ until [ "$(fly -t local workers | wc -l)" != 0 ]; do
   sleep 1
 done
 
-xvfb-run ginkgo -r -race
+ginkgo -r -race
