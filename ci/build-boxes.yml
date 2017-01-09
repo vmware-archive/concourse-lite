@@ -9,6 +9,7 @@ inputs:
 - name: concourse-lite
 - name: binaries
 - name: version
+- name: final-version
 
 outputs:
 - name: built-box
