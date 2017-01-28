@@ -2,6 +2,7 @@ FROM concourse/atc-ci
 
 # install virtualbox
 RUN echo 'deb http://download.virtualbox.org/virtualbox/debian xenial contrib' >> /etc/apt/sources.list
+ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && apt-get -y --force-yes install virtualbox-5.1
 
 # install 'lsmod' so virtualbox can detect vboxdrv module is loaded
