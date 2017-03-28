@@ -5,8 +5,8 @@
   "builders": [{
     "type": "virtualbox-iso",
 
-    "iso_url": "http://releases.ubuntu.com/14.04/ubuntu-14.04.4-server-amd64.iso",
-    "iso_checksum": "3ffb7a3690ce9a07ac4a4d1b829f990681f7e47d",
+    "iso_url": "http://releases.ubuntu.com/14.04/ubuntu-14.04.5-server-amd64.iso",
+    "iso_checksum": "dd54dc8cfc2a655053d19813c2f9aa9f",
     "iso_checksum_type": "sha1",
 
     "guest_os_type": "Ubuntu_64",
