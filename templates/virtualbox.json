@@ -6,7 +6,7 @@
     "type": "virtualbox-iso",
 
     "iso_url": "http://releases.ubuntu.com/14.04/ubuntu-14.04.5-server-amd64.iso",
-    "iso_checksum": "dd54dc8cfc2a655053d19813c2f9aa9f",
+    "iso_checksum": "5e567024c385cc8f90c83d6763c6e4f1cd5deb6f",
     "iso_checksum_type": "sha1",
 
     "guest_os_type": "Ubuntu_64",
