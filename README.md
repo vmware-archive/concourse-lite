@@ -1,3 +1,9 @@
+**Deprecation Notice**:
+
+We are in the process of deprecating the Concourse-lite Vagrant image in favor of https://github.com/concourse/concourse-deployment
+
+Please begin to update your workflows appropriately.
+
 # Concourse Lite
 
 ## Reporting Issues and Requesting Features
