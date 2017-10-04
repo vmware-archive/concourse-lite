@@ -71,7 +71,8 @@
       "scripts/admin-sudoers.sh",
       "scripts/increase-loop-devices.sh",
       "scripts/setup-syslog.sh"
-    ]
+    ],
+    "expect_disconnect": true
   },{
     "type": "shell",
     "scripts": [ "scripts/vagrant-pub-key.sh" ]
